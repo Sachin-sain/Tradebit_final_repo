@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>reCAPTCHA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+            async defer>
+    </script>
+</head>
+<style type="text/css">
+#example {
+    position:fixed;
+    left:10%;
+    top: 50%;
+    align:center;
+
+}
+
+</style>
+<body style="background-color: transparent;">
+<div id="example"
+></div>
+
+<script>
+
+  var onloadCallback = function() {
+
+        grecaptcha.render('example', {
+          'sitekey' : '6LeUofckAAAAABZWNok6hqgglqFA_vonGlYaBDvi ',
+          'callback' : verifyCallback,
+          'background-color': 'transparent',
+
+
+        });
+      };
+
+      function verifyCallback(response){
+        //console.log(response);
+        if(typeof Captcha!=="undefined"){
+          Captcha.postMessage(response);
+        }
+      }
+
+    </script>
+</body>
+</html>
+
+<html>
+<body>
+
+
+
