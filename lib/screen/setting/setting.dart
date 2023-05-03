@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import '../Bottom_Nav_Bar/bottom_nav_bar.dart';
 import 'Log.dart';
 import 'Price_Notification.dart';
-
 import 'Support.dart';
 
 class setting extends StatefulWidget {
@@ -50,7 +49,7 @@ class _settingState extends State<setting> {
   @override
   void initState() {
     getdata();
-    Getverification();
+    // Getverification();
     super.initState();
   }
 
@@ -80,28 +79,35 @@ class _settingState extends State<setting> {
     //selected_currency=await SharedPreferenceClass.GetSharedData('Currency');
     user_name = await SharedPreferenceClass.GetSharedData('name');
     user_email = await SharedPreferenceClass.GetSharedData('email');
-    user_image = await SharedPreferenceClass.GetSharedData('profile_image');
+    // user_image = await SharedPreferenceClass.GetSharedData('profile_image');
     token = await SharedPreferenceClass.GetSharedData('token');
     status = await SharedPreferenceClass.GetSharedData('status');
-    Number = await SharedPreferenceClass.GetSharedData('number');
-    ref_link = await SharedPreferenceClass.GetSharedData('ref_link');
+    // Number = await SharedPreferenceClass.GetSharedData('number');
+    // ref_link = await SharedPreferenceClass.GetSharedData('ref_link');
     kyc_status = await SharedPreferenceClass.GetSharedData('kyc_status');
     // kyc_msg=await SharedPreferenceClass.GetSharedData('kyc_msg');
     fees = await SharedPreferenceClass.GetSharedData('fees');
     login_status = await SharedPreferenceClass.GetSharedData("isLogin");
     print(token.toString());
+    print(user_name);
+    print(user_email);
+    print(status);
+    print(kyc_status);
+    print(fees);
+    print(login_status);
+
     setState(() {
       user_name = user_name;
       user_email = user_email;
-      user_image = user_image;
+      // user_image = user_image;
       login_status = login_status;
       status = status;
-      Number = Number;
-      ref_link = ref_link;
+      // Number = Number;
+      // ref_link = ref_link;
       kyc_status = kyc_status;
       // kyc_msg=kyc_msg;
       fees = fees;
-      Verifiedstatus = kyc_status;
+      // Verifiedstatus = kyc_status;
     });
   }
 
@@ -167,8 +173,7 @@ class _settingState extends State<setting> {
                           Navigator.of(context).pop();
                           // ),
                         },
-                        child: Icon(Icons.arrow_back_ios,
-                            color: day == false ? Colors.white : Colors.black)),
+                        child: Icon(Icons.arrow_back_ios, color: day == false ? Colors.white : Colors.black)),
                     Text(
                       "Settings",
                       style: TextStyle(
@@ -245,7 +250,7 @@ class _settingState extends State<setting> {
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          Text(user_name, style: TextStyle(fontFamily: "IBM Plex Sans", fontSize: 15.5, color: day == false ? Colors.white : Colors.black, fontWeight: FontWeight.w700),
+                                          Text(user_name != null ? user_name : '', style: TextStyle(fontFamily: "IBM Plex Sans", fontSize: 15.5, color: day == false ? Colors.white : Colors.black, fontWeight: FontWeight.w700),
                                           ),
                                           SizedBox(
                                             height: 10,

@@ -409,19 +409,19 @@ class _loginState extends State<login> {
       "loginType": loginType,
     };
     print("login succcesss" + paramDic.toString());
-    var response =
-        await LBMAPIMainClass(APIClasses.LBM_login, paramDic, "Post");
+    var response = await LBMAPIMainClass(APIClasses.LBM_login, paramDic, "Post");
     var data = json.decode(response.body);
 
     if (data["status_code"] == '1') {
       var logindata = data['data'];
+
       setState(() {
         login = false;
 
         print(captchaToken);
         if (logindata.containsKey("token") == false) {
           print("login succcesss" + data["status_code"].toString());
-          // ToastShowClass.toastShow(context, data["data"]['message'].toString(), Colors.blue);
+          ToastShowClass.toastShow(context, data['data']['message'].toString(), Colors.blue);
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -431,21 +431,22 @@ class _loginState extends State<login> {
                       )));
         } else {
           print("Login Done");
+
           SharedPreferenceClass.SetSharedData("token", data['data']['token']);
           SharedPreferenceClass.SetSharedData(
-              "name", data['data']['user']['name']);
+              "name", data['data']['user']['username']);
           SharedPreferenceClass.SetSharedData(
               "id", data['data']['user']['id'].toString());
           SharedPreferenceClass.SetSharedData(
               "email", data['data']['user']['email']);
           SharedPreferenceClass.SetSharedData(
-              "phone", data['data']['user']['phone']);
-          SharedPreferenceClass.SetSharedData(
               "referral_code", data['data']['user']['referral_code']);
-          SharedPreferenceClass.SetSharedData(
-              "profile_image", data['data']['user']['profile_image']);
-          SharedPreferenceClass.SetSharedData(
-              "ref_link", data['data']['user']['referral_code']);
+          // SharedPreferenceClass.SetSharedData(
+          //     "phone", data['data']['user']['phone']);
+          // SharedPreferenceClass.SetSharedData(
+          //     "profile_image", data['data']['user']['profile_image']);
+          // SharedPreferenceClass.SetSharedData(
+          //     "ref_link", data['data']['user']['referral_code']);
           SharedPreferenceClass.SetSharedData(
               "number", data['data']['user']['mobile']);
           SharedPreferenceClass.SetSharedData(
@@ -458,9 +459,7 @@ class _loginState extends State<login> {
               "status", (data['data']['user']['status']).toString());
           SharedPreferenceClass.SetSharedData("isLogin", "true");
           getCryptoData();
-          setState(() {
-            login = false;
-          });
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

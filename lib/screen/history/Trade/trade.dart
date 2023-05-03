@@ -97,8 +97,7 @@ class _TradeState extends State<Trade> {
                                                 controller: _tabController,
                                                 indicatorColor: Color(0xfff9bf30),
                                                 labelColor: day == false ? Colors.white : Colors.grey,
-                                                labelStyle: TextStyle(
-                                                    fontWeight: FontWeight.bold, decorationThickness: 2, decorationColor: Color(0xfff9bf30)),
+                                                labelStyle: TextStyle(fontWeight: FontWeight.bold, decorationThickness: 2, decorationColor: Color(0xfff9bf30)),
                                                 unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
                                                 unselectedLabelColor: day == false ? Colors.white60 : Colors.black45,
                                                 tabs: [

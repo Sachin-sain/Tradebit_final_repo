@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, non_constant_identifier_names, camel_case_types, must_be_immutable, unused_local_variable
+
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get_ip_address/get_ip_address.dart';
@@ -97,9 +97,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
             ),
             content: Text(
               'New Update is Available ! We recommends you that you update to the latest version.',
-              style: TextStyle(
-                color: day == false ? Colors.white : Colors.black,
-              ),
+              style: TextStyle(color: day == false ? Colors.white : Colors.black,),
             ),
             actions: [
               TextButton(
