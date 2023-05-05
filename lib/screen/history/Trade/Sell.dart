@@ -275,24 +275,22 @@ class _sellState extends State<sell> {
                 child: Text("Avail.", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
             ),
             SizedBox(
-              height: 85,
+              height: 40,
             ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>login()));
-                },
-                child: Container(
-                  height: 40.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Color(0xffc79509),
-                      borderRadius: BorderRadius.circular(10.0)
-                      //boxShadow: Colors.white12,
-                      ),
-                  child: Center(
-                    child: Text("Sign In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontFamily: "IBM Plex Sans", fontSize: 16.0,),),
-                  ),
+            GestureDetector(
+              onTap: () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context)=>login()));
+              },
+              child: Container(
+                height: 40.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Color(0xffc79509),
+                    borderRadius: BorderRadius.circular(10.0)
+                    //boxShadow: Colors.white12,
+                    ),
+                child: Center(
+                  child: Text("Sign In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontFamily: "IBM Plex Sans", fontSize: 16.0,),),
                 ),
               ),
             )

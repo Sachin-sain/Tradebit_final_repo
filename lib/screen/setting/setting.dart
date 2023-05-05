@@ -49,7 +49,7 @@ class _settingState extends State<setting> {
   @override
   void initState() {
     getdata();
-    // Getverification();
+    Getverification();
     super.initState();
   }
 
@@ -89,12 +89,7 @@ class _settingState extends State<setting> {
     fees = await SharedPreferenceClass.GetSharedData('fees');
     login_status = await SharedPreferenceClass.GetSharedData("isLogin");
     print(token.toString());
-    print(user_name);
-    print(user_email);
-    print(status);
-    print(kyc_status);
-    print(fees);
-    print(login_status);
+
 
     setState(() {
       user_name = user_name;
@@ -193,9 +188,7 @@ class _settingState extends State<setting> {
                           setState(() {
                             SharedPreferenceClass.SetSharedData(
                                 "day",
-                                isDarkModeEnabled == true
-                                    ? "dayfalse"
-                                    : "daytrue");
+                                isDarkModeEnabled == true ? "dayfalse" : "daytrue");
                             day = isDarkModeEnabled == true ? false : true;
                             Navigator.of(context).push(PageRouteBuilder(
                                 pageBuilder: (_, __, ___) => new bottomNavBar(
@@ -277,9 +270,7 @@ class _settingState extends State<setting> {
                               height: 190,
                               width: 400,
                               decoration: BoxDecoration(
-                                  color: day == false
-                                      ? Color(0xff181818)
-                                      : Color(0xffffffff),
+                                  color: day == false ? Color(0xff181818) : Color(0xffffffff),
                                   borderRadius: BorderRadius.circular(5.0)),
                               child: Column(
                                 mainAxisAlignment:

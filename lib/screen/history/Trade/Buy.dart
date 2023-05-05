@@ -209,6 +209,7 @@ class _buyState extends State<buy> {
                   height: 20,
                   width: 35,
                   decoration: BoxDecoration(
+            
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -274,25 +275,21 @@ class _buyState extends State<buy> {
                 padding: EdgeInsets.only(right: 140),
                 child: Text("Avail.", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
             ),
-            SizedBox(
-              height: 85,
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>login()));
-                },
-                child: Container(
-                  height: 40.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Color(0xffc79509),
-                      borderRadius: BorderRadius.circular(10.0)
-                    //boxShadow: Colors.white12,
-                  ),
-                  child: Center(
-                    child: Text("Sign In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontFamily: "IBM Plex Sans", fontSize: 16.0,),),
-                  ),
+            SizedBox(height: 40,),
+            GestureDetector(
+              onTap: () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context)=>login()));
+              },
+              child: Container(
+                height: 40.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Color(0xffc79509),
+                    borderRadius: BorderRadius.circular(10.0)
+                  //boxShadow: Colors.white12,
+                ),
+                child: Center(
+                  child: Text("Sign In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontFamily: "IBM Plex Sans", fontSize: 16.0,),),
                 ),
               ),
             )

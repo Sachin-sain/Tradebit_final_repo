@@ -1,5 +1,3 @@
-
-
 // ignore_for_file: camel_case_types
 
 class btcMarket {
@@ -89,49 +87,49 @@ class btcMarket {
   String get totaltoptiervolume24hto => _totaltoptiervolume24hto;
   String get imageurl => _imageurl;
 
-  btcMarket({
-    String fromsymbol,
-    String tosymbol,
-    String market,
-    String price,
-    String lastupdate,
-    String lastvolume,
-    String lastvolumeto,
-    String lasttradeid,
-    String volumeday,
-    String volumedayto,
-    String volume24hour,
-    String volume24hourto,
-    String openday,
-    String highday,
-    String lowday,
-    String open24hour,
-    String high24hour,
-    String low24hour,
-    String lastmarket,
-    String volumehour,
-    String volumehourto,
-    String openhour,
-    String highhour,
-    String lowhour,
-    String toptiervolume24hour,
-    String toptiervolume24hourto,
-    String change24hour,
-    String changepct24hour,
-    String changeday,
-    String changepctday,
-    String changehour,
-    String changepcthour,
-    String conversiontype,
-    String conversionsymbol,
-    String supply,
-    String mktcap,
-    String mktcappenalty,
-    String totalvolume24h,
-    String totalvolume24hto,
-    String totaltoptiervolume24h,
-    String totaltoptiervolume24hto,
-    String imageurl}){
+  btcMarket(
+      {String fromsymbol,
+      String tosymbol,
+      String market,
+      String price,
+      String lastupdate,
+      String lastvolume,
+      String lastvolumeto,
+      String lasttradeid,
+      String volumeday,
+      String volumedayto,
+      String volume24hour,
+      String volume24hourto,
+      String openday,
+      String highday,
+      String lowday,
+      String open24hour,
+      String high24hour,
+      String low24hour,
+      String lastmarket,
+      String volumehour,
+      String volumehourto,
+      String openhour,
+      String highhour,
+      String lowhour,
+      String toptiervolume24hour,
+      String toptiervolume24hourto,
+      String change24hour,
+      String changepct24hour,
+      String changeday,
+      String changepctday,
+      String changehour,
+      String changepcthour,
+      String conversiontype,
+      String conversionsymbol,
+      String supply,
+      String mktcap,
+      String mktcappenalty,
+      String totalvolume24h,
+      String totalvolume24hto,
+      String totaltoptiervolume24h,
+      String totaltoptiervolume24hto,
+      String imageurl}) {
     _fromsymbol = fromsymbol;
     _tosymbol = tosymbol;
     _market = market;
@@ -267,7 +265,4 @@ class btcMarket {
     map["IMAGEURL"] = _imageurl;
     return map;
   }
-
 }
-
-

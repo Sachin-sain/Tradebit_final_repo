@@ -155,9 +155,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   static NumberFormat Cr = new NumberFormat("#,##0.00", "en_US");
   TabController _tabController;
   List<listType> SliderImage = [
-    listType(
-      image: 'assets/image/banner/banner1.png',
-    ),
+    listType(image: 'assets/image/banner/banner1.png',),
     listType(image: 'assets/image/banner/banner2.png'),
     listType(image: 'assets/image/banner/banner3.jpg'),
     listType(image: 'assets/image/banner/banner4.png')
@@ -209,8 +207,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     final paramDic = {
       "": '',
     };
-    var response =
-        await APIMainClassbanner(APIClasses.banners, paramDic, "Get");
+    var response = await APIMainClassbanner(APIClasses.banners, paramDic, "Get");
     var data = json.decode(response.body);
     print(response.toString());
 
@@ -346,8 +343,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                     onTap: () async {
                       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
                       scanQR();
-                      AndroidDeviceInfo androidInfo =
-                          await deviceInfo.androidInfo;
+                      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
                       var ipAddress = IpAddress(type: RequestType.json);
 
                       /// Get the IpAddress based on requestType.

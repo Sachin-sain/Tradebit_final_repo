@@ -42,7 +42,6 @@ class _ChangePassword extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-
     return Form(
       key: _formKeys,
       child: Scaffold(

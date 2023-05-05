@@ -41,21 +41,8 @@ List<gridHome> listGridHome = [
         Colors.greenAccent.withOpacity(0.2),
         Colors.greenAccent.withOpacity(0.01)
       ],
-      data: [
-        0.0,
-        0.5,
-        0.9,
-        1.4,
-        2.2,
-        1.0,
-        3.3,
-        0.0,
-        -0.5,
-        -1.0,
-        -0.5,
-        0.0,
-        0.0
-      ]),
+      data: [0.0, 0.5,0.9, 1.4, 2.2, 1.0, 3.3, 0.0,-0.5, -1.0, -0.5, 0.0, 0.0]
+  ),
   gridHome(
       name: "BTC/USDT",
       image: "Test",
