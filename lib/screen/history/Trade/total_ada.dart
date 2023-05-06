@@ -13,17 +13,18 @@ class _adaState extends State<ada> {
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
+
         for (var i = 0; i <= 10; i++)
           Container(
               padding: EdgeInsets.only(left: 20),
-              child: AutoSizeText("0.3810215", style: TextStyle(color:Colors.white,))
+              child: AutoSizeText("0.3810215", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909)))
           ),
         SizedBox(
           height: 10,
         ),
         Container(
             padding: EdgeInsets.only(left: 20,right: 5),
-            child: AutoSizeText("= 0.38", style: TextStyle(color: Colors.white, fontSize: 16,fontWeight: FontWeight.bold,))
+            child: AutoSizeText("= 0.38", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909), fontSize: 16,fontWeight: FontWeight.bold,))
         ),
 
         SizedBox(
@@ -31,7 +32,7 @@ class _adaState extends State<ada> {
         ),
         for (var i = 0; i <= 7; i++)
           Container(
-              padding: EdgeInsets.only(left: 23,right: 5), child: AutoSizeText("0.3810219", style: TextStyle(color:Colors.white,),)
+              padding: EdgeInsets.only(left: 23,right: 5), child: AutoSizeText("0.3810219", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
           ),
       ],
     );

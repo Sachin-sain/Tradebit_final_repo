@@ -4645,7 +4645,6 @@ class _btcDetailState extends State<btcDetail> {
                                   binanceFetchcandle("1d");
                                   isclick = true;
                                 }
-
                                 selected = "1d";
                               });
                             },

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import '../../../config/constantClass.dart';
@@ -56,45 +55,48 @@ class _buyState extends State<buy> {
               height: 30,
               width: 180,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Color(0xff313131),width: 2),
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    padding: EdgeInsets.only(bottom: 5),
-                    iconSize: 20,
-                    color: Colors.grey,
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.circle,
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: DropdownButton<String>(
-                      underline: SizedBox(),
-                      // Step 3.
-                      value: dropdownValue,
-                      // Step 4.
-                      items: <String>['Limit', 'Market', 'Stop Limit', 'Stop Market', 'OCO', 'trailing Spot'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        );
-                      }).toList(),
-                      // Step 5.
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                        });
-                      },
+                  // IconButton(
+                  //   padding: EdgeInsets.only(bottom: 5),
+                  //   iconSize: 20,
+                  //   color: Colors.grey,
+                  //   onPressed: () {},
+                  //   icon: const Icon(
+                  //     Icons.circle,
+                  //   ),
+                  // ),
+                  Padding(
+                    padding:  EdgeInsets.only(left: 8.0),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: DropdownButton<String>(
+                        underline: SizedBox(),
+                        // Step 3.
+                        value: dropdownValue,
+                        // Step 4.
+                        items: <String>['Limit', 'Market', 'Stop Limit', 'Stop Market', 'OCO', 'trailing Spot'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(fontSize: 13,color: Colors.grey),
+                            ),
+                          );
+                        }).toList(),
+                        // Step 5.
+                        onChanged: (String newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                          });
+                        },
+                      ),
                     ),
                   )
                 ],
@@ -107,7 +109,7 @@ class _buyState extends State<buy> {
               height: 30,
               width: 180,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Color(0xff313131),width: 2),
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: Row(
@@ -115,7 +117,7 @@ class _buyState extends State<buy> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(
-                    padding: EdgeInsets.only(bottom: 5),
+                    padding: EdgeInsets.only(bottom: 2),
                     iconSize: 20,
                     color: Colors.grey,
                     onPressed: () {
@@ -132,7 +134,7 @@ class _buyState extends State<buy> {
                     ),
                   ),
                   IconButton(
-                    padding: EdgeInsets.only(bottom: 5),
+                    padding: EdgeInsets.only(bottom: 2),
                     iconSize: 20,
                     color: Colors.grey,
                     onPressed: () {
@@ -159,7 +161,7 @@ class _buyState extends State<buy> {
               height: 30,
               width: 180,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Color(0xff313131),width: 2),
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: Row(
@@ -167,7 +169,7 @@ class _buyState extends State<buy> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(
-                    padding: EdgeInsets.only(bottom: 5),
+                    padding: EdgeInsets.only(bottom: 2),
                     iconSize: 20,
                     color: Colors.grey,
                     onPressed: () {
@@ -184,7 +186,7 @@ class _buyState extends State<buy> {
                     ),
                   ),
                   IconButton(
-                    padding: EdgeInsets.only(bottom: 5),
+                    padding: EdgeInsets.only(bottom: 2),
                     iconSize: 20,
                     color: Colors.grey,
                     onPressed: () {
@@ -209,8 +211,8 @@ class _buyState extends State<buy> {
                   height: 20,
                   width: 35,
                   decoration: BoxDecoration(
-            
-                    border: Border.all(color: Colors.grey),
+                    color:  day == false ?Color(0xff313131) : Colors.grey,
+                    border: Border.all(color: Color(0xff313131),width: 2),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: Text("25%", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909), fontSize: 12),),
@@ -220,7 +222,8 @@ class _buyState extends State<buy> {
                   height: 20,
                   width: 35,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    color:  day == false ?Color(0xff313131) : Colors.grey,
+                    border: Border.all(color: Color(0xff313131),width: 2),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: Text("50%", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909), fontSize: 12),),
@@ -230,7 +233,8 @@ class _buyState extends State<buy> {
                   height: 20,
                   width: 35,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    color:  day == false ?Color(0xff313131) : Colors.grey,
+                    border: Border.all(color: Color(0xff313131),width: 2),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: Text(
@@ -242,7 +246,8 @@ class _buyState extends State<buy> {
                   height: 20,
                   width: 35,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    color:  day == false ?Color(0xff313131) : Colors.grey,
+                    border: Border.all(color: Color(0xff313131),width: 2),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: Text(
@@ -258,7 +263,7 @@ class _buyState extends State<buy> {
               height: 30,
               width: 180,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Color(0xff313131),width: 2),
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: Text("$ADA", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909)),),
@@ -275,21 +280,21 @@ class _buyState extends State<buy> {
                 padding: EdgeInsets.only(right: 140),
                 child: Text("Avail.", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
             ),
-            SizedBox(height: 40,),
+            SizedBox(height: 60,),
             GestureDetector(
               onTap: () {
                 // Navigator.push(context, MaterialPageRoute(builder: (context)=>login()));
               },
               child: Container(
-                height: 40.0,
+                height: 50.0,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Color(0xffc79509),
+                    color: Colors.green,
                     borderRadius: BorderRadius.circular(10.0)
                   //boxShadow: Colors.white12,
                 ),
                 child: Center(
-                  child: Text("Sign In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontFamily: "IBM Plex Sans", fontSize: 16.0,),),
+                  child: Text("buy BTC", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontFamily: "IBM Plex Sans", fontSize: 16.0,),),
                 ),
               ),
             )
