@@ -30,7 +30,7 @@ class APIClasses {
   static String Validatewalletotp = "/backend/public/api/block/validateotpWith";
 
   ///buy/sell
-  static String buy = '/orders/place-order';
+  static String buy = '/orders/place-order';///
 
   //orderHistory
   static String ordertradehistory = '/list-crypto/trade-history/';

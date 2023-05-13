@@ -232,7 +232,7 @@ class _TradeState extends State<Trade> {
                   SizedBox(
                     width: 5,
                   ),
-
+///
                   Container(
                     height: 460,
                     width: 182,
@@ -242,7 +242,6 @@ class _TradeState extends State<Trade> {
                       SizedBox(width: 100,),
                         Container(
                           margin: EdgeInsets.only(left: 90),
-
                           height: 15,
                           width: 66,
                           decoration: BoxDecoration(
@@ -256,37 +255,10 @@ class _TradeState extends State<Trade> {
                                   20,color: day == false ? Colors.white : Color(0xff0a0909),)
                             ],
                           )
+                        ),
 
-                        ),
-                        SizedBox(height: 8,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Text("Price", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                                Text("(USDT)", style: TextStyle(color: Colors.grey, fontSize: 10)),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                // price(),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text("Total", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                                Text("(ADA)", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                ada(),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
+ ///Bids and asks data
+                     Expanded(child: Price()),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -355,7 +327,7 @@ class _TradeState extends State<Trade> {
                 child: Expanded(
                   child: Container(
                     child: DefaultTabController(
-                      length: 4,
+                      length: 3,
                       child: Card(color: day == false ? Color(0xff181818) : Color(0xffffffff),
                         child: new Scaffold(backgroundColor: day == false ? Color(0xff181818) : Color(0xffffffff),
                           appBar: PreferredSize(
@@ -451,7 +423,6 @@ class _TradeState extends State<Trade> {
                                   RemainingopenOrders(),
                                   CompleteopenOrders(),
                                   Nodata(),
-
                                 ],
                               ),
                             ),
@@ -468,13 +439,5 @@ class _TradeState extends State<Trade> {
       ),
     );
   }
-
-
-
-
-
-
-
-
 }
 

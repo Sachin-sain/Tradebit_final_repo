@@ -1,64 +1,94 @@
-// import 'package:auto_size_text/auto_size_text.dart';
-// import 'package:exchange/config/APIClasses.dart';
-// import 'package:exchange/config/APIMainClass.dart';
-// import 'package:flutter/material.dart';
-//
-// import '../../../config/constantClass.dart';
-// import 'package:http/http.dart' as https;
-// class price extends StatefulWidget {
-//   @override
-//   State<price> createState() => _priceState();
-//
-// }
-//
-// class _priceState extends State<price> {
-//   Future<List<Model>> futureData;
-//
-//
-//   Widget build(BuildContext context) {
-//     return FutureBuilder<Model>(
-//       future: futureData,
-//       builder: (context, snapshot) {
-//         if (snapshot.hasData) {
-//           return Column(
-//               children: snaphot.map((e)=>Text(e.name)).toList()
-//           );
-//         } else if (snapshot.hasError) {
-//           return Text('${snapshot.error}');
-//         }
-//         return const CircularProgressIndicator();
-//       },
-//     );
-//   }
-// }
-// Future<List<Model>> fetchData() async {
-//   final response = await APIMainClassbinance(APIClasses.openorder ,"market-data/BTCUSDT");
-//   if (response.statusCode == 200) {
-//     return Model.getList(response.body);
-//   } else {
-//     throw Exception('Unable to fetch products from the REST API');
-//   }
-// }
-//
-// class Model {
-//   final String name;
-//   final String location;
-//   final String action_value;
-//   final String item;
-//
-//   Model(this.name, this.location, this.action_value, this.item);
-//
-//   List<Model> getList(json) {
-//     List<Model> tempList = [];
-//     json['records'].forEach((model)=> tempList.add(
-//         Model(
-//             model["name"],
-//             model["location"],
-//             model["action_value"],
-//             model["item"]
-//         )
-//     )
-//     );
-//     return tempList;
-//   }
-// }
+import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:exchange/config/APIClasses.dart';
+import 'package:exchange/config/APIMainClass.dart';
+import 'package:exchange/library/intro_views_flutter-2.4.0/lib/Models/asks_bids_response.dart';
+import 'package:flutter/material.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+class Price extends StatefulWidget {
+  const Price({key});
+  @override
+  State<Price> createState() => _PriceState();
+}
+class _PriceState extends State<Price> {
+   WebSocketChannel channel;
+  List<List<String>> bids = [];
+  List<List<String>> asks = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+
+        children: [
+          Expanded(
+            child: ListView.separated(itemBuilder: (c,i){
+              // future:fetchData();
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  AutoSizeText(bids[i].first, style: TextStyle(color: Colors.red),),
+                    AutoSizeText(bids[i].last, style: TextStyle(color: Colors.blueGrey),),
+                ],
+              );
+            }, separatorBuilder: (c,i){
+              return SizedBox();
+            }, itemCount: bids.length ?? 0,
+            ),
+          ),
+          SizedBox(height: 10,),
+          Expanded(
+            child: ListView.separated(itemBuilder: (c,i){
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  AutoSizeText(asks[i].first, style: TextStyle(color: Colors.green),),
+
+                    AutoSizeText(asks[i].last, style: TextStyle(color: Colors.blueGrey),),
+                ],
+              );
+            }, separatorBuilder: (c,i){
+              return SizedBox();
+            }, itemCount: asks.length ?? 0,
+            ),
+          )
+        ],
+      );
+  }
+  Future<void> fetchData() async {
+    final Symbol = "BTCUSDT";
+    final Map<String, String> paramDic = {
+      "limit": "20",
+    };
+    try {
+      final response = await APIMainClassbinance(APIClasses.openorder + Symbol, paramDic, "Get");
+      if (response?.statusCode == 200) {
+        var data = newDataFromJson(response.body);
+        setState(() {
+          bids = data.data.bids;
+          asks = data.data.asks;
+        });
+      } else {
+        throw Exception('Unable to fetch data ');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch data: $e');
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

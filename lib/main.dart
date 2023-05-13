@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:exchange/config/constantClass.dart';
 import 'package:exchange/screen/Bottom_Nav_Bar/bottom_nav_bar.dart';
 import 'package:exchange/screen/intro/on_Boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'config/constantClass.dart';
+
 /// Run first apps open
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(myApp());
   AwesomeNotifications().initialize(
     null,

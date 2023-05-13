@@ -1,4 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, missing_return, deprecated_member_use
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +9,7 @@ class SharedPreferenceClass{
     prefs.setString(SPKey, SPData);
   }
 //Get the data that save in Shared preference
-  static Future<String> GetSharedData(String SPKey) async {
+  static Future<Object> GetSharedData(String SPKey) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.get(SPKey);
   }

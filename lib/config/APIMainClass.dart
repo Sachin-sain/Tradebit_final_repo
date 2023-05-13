@@ -52,19 +52,17 @@ Future<http.Response> APIMainClassbanner(
 
 Future<http.Response> APIMainClassbinance(
     String SubURL, Map<String, String> paramDic, String PostGet) async {
-  String token = await SharedPreferenceClass.GetSharedData('token');
+  Object token = await SharedPreferenceClass.GetSharedData('token');
 
   //check the condition API post and get
   if (PostGet == "Get") {
     final uri = new Uri.https(APIClasses.NODELBM_BaseURL, SubURL, paramDic);
-    //
-    //print(uri.toString() + ' === ' + token);
-    print('token  $token');
+
     var response = await http.get(uri, headers: {
       "Accept": "application/json",
       "Authorization": "Bearer $token"
     });
-    print(response);
+
     return response;
   } else {
     final uri = new Uri.https(APIClasses.NODELBM_BaseURL, SubURL);

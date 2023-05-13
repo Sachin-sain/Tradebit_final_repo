@@ -288,7 +288,7 @@ class _CreatePriceAlertScreenState extends State<CreatePriceAlertScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).accentIconTheme.color,),);
+                icon: Icon(Icons.arrow_back_ios, color: Colors.white),);
             }
         ),
       ),
@@ -358,7 +358,7 @@ class _CreatePriceAlertScreenState extends State<CreatePriceAlertScreen> {
                             SizedBox(width: width * 0.03,),
                             Text(selectedCoinDetail['coinName'].toString(), style: TextStyle(color: Theme.of(context).textTheme.bodyText1.color, fontSize: 16, fontWeight: FontWeight.w600),),
                             Spacer(),
-                            Icon(Icons.arrow_forward_ios_rounded, color: Theme.of(context).accentIconTheme.color, size: 22,)
+                            Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 22,)
                           ],
                         ),
                       ),

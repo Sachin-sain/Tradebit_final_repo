@@ -81,8 +81,8 @@ class _BottomNavigationDotBarState extends State<BottomNavigationDotBar>{
     ),
   );
 
-  List<_NavigationIconButton> _createNavigationIconButtonList(Map<int, BottomNavigationDotBarItem> mapItem){
-    List<_NavigationIconButton> children = List<_NavigationIconButton>();
+  List<_NavigationIconButton> _createNavigationIconButtonList(Map<int, BottomNavigationDotBarItem> mapItem) {
+    List<_NavigationIconButton> children = <_NavigationIconButton>[];
     mapItem.forEach((index, item) =>
         children.add(_NavigationIconButton(item.icon, (index == _indexPageSelected) ? _activeColor : _color,item.onTap,() { _changeOptionBottomBar(index); }))
     );
