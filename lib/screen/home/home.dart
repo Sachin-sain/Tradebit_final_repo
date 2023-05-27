@@ -51,6 +51,7 @@ class home extends StatefulWidget {
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
 
   String _scanBarcode = '';
+  int Selctedindex=0;
 
   @override
   //QR Code
@@ -168,7 +169,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       checkForUpdates();
     });
-    _tabController = new TabController(length: 3, vsync: this, initialIndex: 1);
+    _tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
     getBanners();
     BTCAPI(CurrencyName: 'USDT');
     check();
@@ -690,6 +691,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
           Expanded(
             child: Container(
               child: DefaultTabController(
+                initialIndex:0,
                 length: 3,
                 child: Card(
                   color: day == false ? Color(0xff181818) : Color(0xffffffff),

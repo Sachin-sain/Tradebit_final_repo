@@ -1,9 +1,14 @@
 // ignore_for_file: camel_case_types, non_constant_identifier_names, unnecessary_statements, unused_element
 
+import 'dart:convert';
+import 'dart:core';
 import 'dart:math';
 import 'package:exchange/component/style.dart';
+import 'package:exchange/config/APIClasses.dart';
+import 'package:exchange/config/APIMainClass.dart';
 import 'package:exchange/config/SharedPreferenceClass.dart';
 import 'package:exchange/config/constantClass.dart';
+import 'package:exchange/library/intro_views_flutter-2.4.0/lib/Models/wallet_response.dart';
 import 'package:exchange/screen/history/Transactions.dart';
 import 'package:exchange/screen/wallet/tabs/deposit_history.dart';
 import 'package:exchange/screen/wallet/tabs/wallet_history.dart';
@@ -18,6 +23,7 @@ import 'package:wakelock/wakelock.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+
 double currencybal = 0.0;
 String selectedbal = '';
 double sum = 0.0;
@@ -26,9 +32,9 @@ List savedothercryptodata = [];
 bool isloaded = false;
 String status;
 
-class wallet extends StatefulWidget {
+class Wallet extends StatefulWidget {
   @override
-  _walletState createState() => new _walletState();
+  _WalletState createState() => new _WalletState();
 
   ///
   /// time for wave header wallet
@@ -38,10 +44,13 @@ class wallet extends StatefulWidget {
   }
 }
 
-class _walletState extends State<wallet> {
+class _WalletState extends State<Wallet> {
   List crytodata = [];
   bool isSwitched = false;
   List allCurrenciesDatasearch = [];
+  List <WalletResponse> datum = [];
+  List <Datum> data = [];
+  List  network = [];
 
   double Price = 0.00;
   var item;
@@ -56,7 +65,7 @@ class _walletState extends State<wallet> {
     Wakelock.enable();
     // if(savedothercryptodata.length<0)
     //   getCryptoData();
-    getData();
+    getdata();
     // checkstatus();
 
     super.initState();
@@ -78,10 +87,13 @@ class _walletState extends State<wallet> {
   getData() {
     print(savedothercryptodata.toString());
     //inrBalance = inrData['c_bal'];
-    nonEmptyList.addAll(
-        savedothercryptodata.where((element) => element['c_bal'] != '0'));
-    allCurrenciesDatasearch.addAll(savedothercryptodata);
-    allCurrenciesData.addAll(savedothercryptodata);
+    setState(() {
+      nonEmptyList.addAll(
+          savedothercryptodata.where((element) => element['c_bal'] != '0'));
+      allCurrenciesDatasearch.addAll(savedothercryptodata);
+      allCurrenciesData.addAll(savedothercryptodata);
+    });
+
     // print('inr Data=>' + allCurrenciesData['currency_network']['address'].toString());
   }
 
@@ -115,7 +127,6 @@ class _walletState extends State<wallet> {
 
   @override
   Widget build(BuildContext context) {
-    print(allCurrenciesData[0]['image'].toString());
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     Size size = new Size(MediaQuery.of(context).size.width, 200.0);
     var _width = MediaQuery.of(context).size.width;
@@ -221,252 +232,90 @@ class _walletState extends State<wallet> {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 5,right: 5),
-                child: Card(
-                   color: day == false ? Color(0xff181818) : Color(0xffffffff),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: allCurrenciesData.length,
-                      itemBuilder: (ctx, i) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 7.0, bottom: 7),
-                          child: Column(
-                            children: <Widget>[
-                              InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) => new walletDetail(
-                                            currency: allCurrenciesData[i]['name'],
-                                            currencySymbol: allCurrenciesData[i]
-                                                ['symbol'],
-                                            index: 1,
-                                            network: allCurrenciesData[i]
-                                                ['currency_networks'],
-                                            qty: allCurrenciesData[i]['quantity']
-                                                .toString(),
-                                          )));
-                                },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      color: Colors.white.withOpacity(0.1),
-                                      width: _width *
-                                          double.parse(Crone.format(double.parse(
-                                              allCurrenciesData[i][
-                                                  'portfolio_share']))), // here you can define your percentage of progress, 0.2 = 20%, 0.3 = 30 % .....
-                                      height: 50,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 12.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      right: 12.0),
-                                                  child: CircleAvatar(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    radius: 15,
-                                                    child: allCurrenciesData[i]
-                                                                ['image'] ==
-                                                            null
-                                                        ? Image.asset(
-                                                            '',
-                                                            height: 25.0,
-                                                            fit: BoxFit.contain,
-                                                            width: 25.0,
-                                                          )
-                                                        : Image.network(
-                                                            allCurrenciesData[i]
-                                                                    ['image']
-                                                                .toString(),
-                                                            height: 25.0,
-                                                            fit: BoxFit.contain,
-                                                            width: 25.0,
-                                                            errorBuilder: (context,
-                                                                    error,
-                                                                    stackTrace) =>
-                                                                Container(
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                          shape: BoxShape
-                                                                              .circle,
-                                                                          border:
-                                                                              Border
-                                                                                  .all(
-                                                                            color: day ==
-                                                                                    false
-                                                                                ? Colors.white
-                                                                                : Color(0xff17394f),
-                                                                          )),
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  child: Text(
-                                                                    allCurrenciesData[i]
-                                                                                [
-                                                                                'symbol'] ==
-                                                                            null
-                                                                        ? '-'
-                                                                        : allCurrenciesData[
-                                                                                i][
-                                                                            'symbol'][0],
-                                                                    style: TextStyle(
-                                                                        color: day ==
-                                                                                false
-                                                                            ? Colors
-                                                                                .white
-                                                                            : Color(
-                                                                                0xff17394f),
-                                                                        fontFamily:
-                                                                            "IBM Plex Sans",
-                                                                        fontSize:
-                                                                            16.5),
-                                                                  ),
-                                                                )),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: 95.0,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        allCurrenciesData[i]
-                                                                    ['symbol'] ==
-                                                                null
-                                                            ? '-'
-                                                            : allCurrenciesData[i]
-                                                                ['symbol'],
-                                                        style: TextStyle(
-                                                            color: day == false
-                                                                ? Colors.white
-                                                                : Color(0xff17394f),
-                                                            fontFamily:
-                                                                "IBM Plex Sans",
-                                                            fontSize: 16.5),
-                                                      ),
-                                                      Text(
-                                                        allCurrenciesData[i]
-                                                                    ['name'] ==
-                                                                null
-                                                            ? '-'
-                                                            : allCurrenciesData[i]
-                                                                ['name'],
-                                                        style: TextStyle(
-                                                            color: day == false
-                                                                ? Colors.white70
-                                                                : Color(0xff17394f)
-                                                                    .withOpacity(
-                                                                        0.2),
-                                                            fontFamily:
-                                                                "IBM Plex Sans",
-                                                            fontSize: 12.5),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 15.0),
-                                            child: Container(
-                                              child: Row(
-                                                children: [
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        allCurrenciesData[i]
-                                                            ['quantity'],
-                                                        style: TextStyle(
-                                                            color: day == false
-                                                                ? Colors.white
-                                                                : Color(0xff17394f),
-                                                            fontFamily:
-                                                                "IBM Plex Sans",
-                                                            fontSize: 14.5,
-                                                            fontWeight:
-                                                                FontWeight.w600),
-                                                      ),
-                                                      Text(
-                                                        '\$' +
-                                                            allCurrenciesData[i]
-                                                                    ['c_bal']
-                                                                .toString(),
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                "IBM Plex Sans",
-                                                            fontSize: 11.5,
-                                                            color: day == false
-                                                                ? Colors.white54
-                                                                : Color(
-                                                                    0xff17394f)),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Icon(
-                                                    Icons.keyboard_arrow_right,
-                                                    size: 30.0,
-                                                    color: day == false
-                                                        ? Colors.white
-                                                        : Color(0xff17394f),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10.0, right: 20.0, top: 0.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 0.5,
-                                  decoration: BoxDecoration(color: Colors.white54),
-                                ),
-                              )
+              child: ListView.builder(
+                itemCount: data.length,
+                  itemBuilder: (c,i) {
+                return Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (c)=> walletDetail(
+                          currency: data[i].cPrice,
+                          currencySymbol: data[i].symbol,
+                          network: network,
+                          qty: data[i].quantity,
+                        )));
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10,),
+                          Container(
+                            height: 30,
+                              width: 30,
+                              child: Image.network(data[i].image)),
+                          SizedBox(width: 15,),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data[i].name,style: TextStyle(
+                                fontWeight: FontWeight.bold,color: day == false ? Colors.white : Color(0xff0a0909)
+                              ),),
+                              SizedBox(height: 4,),
+                              Text(data[i].symbol,style: TextStyle(
+                                fontSize: 10,color: day == false ? Colors.white : Color(0xff0a0909)
+                              ),),
                             ],
                           ),
-                        );
-                      }),
-                ),
-              ),
+                          Spacer(),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(data[i].quantity,style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909)),),
+                              Text("\$ " + double.parse(data[i].cPrice).toStringAsFixed(4),style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909)),),
+                            ],
+                          ),
+                          SizedBox(width: 10,),
+                          Icon(Icons.arrow_forward_ios,color: day == false ? Colors.white : Color(0xff0a0909),size: 18,),
+                          SizedBox(width: 20,),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      margin: EdgeInsets.only(left: 8,right: 8),
+                      height: 0.5,
+                        color: day == false ? Colors.white : Color(0xff0a0909)
+                    ),
+                    SizedBox(height: 15),
+                  ],
+                );
+              })
             ),
           ],
         ));
   }
-
+    getdata() async {
+    try {
+      final Map<String, String> paramDic = {
+        "" : "",
+      };
+      var response =
+      await APIMainClassbinance(APIClasses.Crypto_Data, paramDic, "Get");
+      if(response.statusCode == 200) {
+        setState(() {
+          var n = json.decode(response.body);
+       var d =  walletResponseFromJson(response.body);
+       datum.add(d);
+       data.addAll(d.data);
+       network.addAll(n['data'][0]['currency_networks']);
+        });
+      }
+    }catch (e) {
+   print(e);
+    }
+}
   Widget _loadingData(BuildContext context) {
     return Container(
       child: ListView.builder(

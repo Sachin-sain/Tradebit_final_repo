@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:exchange/config/constantClass.dart';
 import 'package:exchange/screen/market/detailCrypto/btcDetail.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +15,9 @@ import 'package:wakelock/wakelock.dart';
 class gainer extends StatefulWidget {
   final Widget child;
   Map<String, dynamic> currency_data;
-
   gainer({Key key, this.child, this.currency_data}) : super(key: key);
-
   _gainerState createState() => _gainerState();
 }
-
 class _gainerState extends State<gainer> with TickerProviderStateMixin {
   bool isblink = false;
 
@@ -122,7 +118,7 @@ class _gainerState extends State<gainer> with TickerProviderStateMixin {
             /// if image loaded true (image still downloading from server)
             /// Card to set card loading animation
             ///
-            Currency_data['$CurrencyName'].length >0 ?_dataLoaded(context):Container(child: Text("Server Issue "),),
+            Currency_data['$CurrencyName'].length > 0 ?_dataLoaded(context):Container(child: Text("Server Issue "),),
           ],
         ));
   }

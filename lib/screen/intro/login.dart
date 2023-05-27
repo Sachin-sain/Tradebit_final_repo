@@ -1,12 +1,9 @@
-// ignore_for_file: camel_case_types, unused_element, unused_field, override_on_non_overriding_member, non_constant_identifier_names, must_call_super, unused_local_variable
 
 import 'dart:convert';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:exchange/screen/intro/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter_plus/webview_flutter_plus.dart';
-
 import '../../config/APIClasses.dart';
 import '../../config/APIMainClass.dart';
 import '../../config/SharedPreferenceClass.dart';

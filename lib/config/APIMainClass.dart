@@ -56,7 +56,7 @@ Future<http.Response> APIMainClassbinance(
 
   //check the condition API post and get
   if (PostGet == "Get") {
-    final uri = new Uri.https(APIClasses.NODELBM_BaseURL, SubURL, paramDic);
+    final uri = new Uri.https(APIClasses.NODELBM_BaseURL, SubURL);
 
     var response = await http.get(uri, headers: {
       "Accept": "application/json",

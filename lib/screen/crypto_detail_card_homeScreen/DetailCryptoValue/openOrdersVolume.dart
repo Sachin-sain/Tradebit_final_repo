@@ -145,26 +145,20 @@ class _openOrdersVolumeState extends State<openOrdersVolume> {
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Text(
-                          "Buy Amount",
+                          "Price\n(USDT) ",
                           style: TextStyle(
-                              color:day==false?Colors.white:Colors.black,
+                            fontSize: 10,
+                              color:day==false ? Colors.white:Colors.black,
                               fontFamily: "IBM Plex Sans"),
                         ),
                       ),
                       Text(
-                        "Price",
+                        "Total\n(BTC)",
                         style: TextStyle(
+                          fontSize: 10,
                             color: day==false?Colors.white:Colors.black, fontFamily: "IBM Plex Sans"),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: Text(
-                          "Amount Sell",
-                          style: TextStyle(
-                              color:day==false?Colors.white:Colors.black,
-                              fontFamily: "IBM Plex Sans"),
-                        ),
-                      ),
+                      SizedBox(),
                     ],
                   ),
                 ),
@@ -174,16 +168,26 @@ class _openOrdersVolumeState extends State<openOrdersVolume> {
               height: 5.0,
             ),
              StreamBuilder(
-                stream: widget.listed=='true'?channel_usdtOwn.stream:channel_usdt.stream,
+                stream: widget.listed=='true'? channel_usdtOwn.stream : channel_usdt.stream,
                 builder: (context, snapshot) {
                   print("CHECK CHECKKK  "+snapshot.data.toString());
 
                   if (snapshot.connectionState == ConnectionState.waiting  ) {
                     print("check ckecl weaitin");
-                    return anotherbuYlist.length>0 || othersellList.length>0 ?Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
+                    return anotherbuYlist.length > 0 || othersellList.length>0 ? Column(
+                      children: [
+                        Container(
+                          //height: 300.0,
+                            width: mediaQuery,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              primary: false,
+                              itemCount: othersellList.length,
+                              itemBuilder: (BuildContext ctx, int i) {
+                                return _amountSell(mediaQuery, othersellList[i]);
+                              },
+                            )
+                        ),
                         Container(
                           // height: 300.0,
                             width: mediaQuery,
@@ -197,19 +201,8 @@ class _openOrdersVolumeState extends State<openOrdersVolume> {
                             )
                         ),
                         SizedBox(width: 5,),
-                        Container(
-                          //height: 300.0,
-                            width: mediaQuery,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              primary: false,
-                              itemCount: othersellList.length,
-                              itemBuilder: (BuildContext ctx, int i) {
-                                return _amountSell(mediaQuery, othersellList[i]);
-                              },
-                            )
-                        )
-                      ],):_loadingData(context);
+                      ],
+                    ):_loadingData(context);
                   }
                   if (snapshot.hasError) {
                     return Center(child: Text(snapshot.error.toString()));
@@ -264,10 +257,21 @@ class _openOrdersVolumeState extends State<openOrdersVolume> {
                                 .toString();
                       }
                     }
-                    return anotherbuYlist.length>0 || othersellList.length>0 ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
+                    return anotherbuYlist.length>0 || othersellList.length>0 ? Column(
+                      children: [
+                        Container(
+                          // height: 300.0,
+                          width: mediaQuery,
+                          child: othersellList.length>0? ListView.builder(
+                            shrinkWrap: true,
+                            primary: false,
+                            itemCount: othersellList.length,
+                            itemBuilder: (BuildContext ctx, int i) {
+                              print("checklength"+othersellList.length.toString());
+                              return _amountSell(mediaQuery, othersellList[i]);
+                            },
+                          ):Text(""),
+                        ),
                         Container(
 
                           // height: 300.0,
@@ -282,56 +286,45 @@ class _openOrdersVolumeState extends State<openOrdersVolume> {
                           ),
                         ),
                         SizedBox(width: 5,),
-                        Container(
-                          // height: 300.0,
-                          width: mediaQuery,
-                          child: othersellList.length>0? ListView.builder(
-                            shrinkWrap: true,
-                            primary: false,
-                            itemCount: othersellList.length,
-                            itemBuilder: (BuildContext ctx, int i) {
-                              print("checklength"+othersellList.length.toString());
-                              return _amountSell(mediaQuery, othersellList[i]);
-                            },
-                          ):Text(""),
-                        ),
-                      ],):Center(
+
+                      ],
+                    ):Center(
                   child: Padding(
                   padding:  EdgeInsets.only(top: size.height*0.3),
                   child: Text("No orders get placed yet..."),
                   ),
                   );
                   }
-                  return anotherbuYlist.length>0 || othersellList.length>0 ?Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                       Container(
-                        // height: 300.0,
-                        width: mediaQuery,
-                        child:ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          itemCount: anotherbuYlist.length,
-                          itemBuilder: (BuildContext ctx, int i) {
-                            return _buyAmount(mediaQuery, anotherbuYlist[i]);
-                          },
-                        )
-                      ),
-                      SizedBox(width: 5,),
+                  return anotherbuYlist.length>0 || othersellList.length>0 ?Column(
+                    children: [
                       Container(
                         //height: 300.0,
-                        width: mediaQuery,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          itemCount: othersellList.length,
-                          itemBuilder: (BuildContext ctx, int i) {
-                            return _amountSell(mediaQuery, othersellList[i]);
-                          },
-                        )
-                      )
-                    ],):Center(
+                          width: mediaQuery,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            primary: false,
+                            itemCount: othersellList.length,
+                            itemBuilder: (BuildContext ctx, int i) {
+                              return _amountSell(mediaQuery, othersellList[i]);
+                            },
+                          )
+                      ),
+                      Container(
+                       // height: 300.0,
+                       width: mediaQuery,
+                       child:ListView.builder(
+                         shrinkWrap: true,
+                         primary: false,
+                         itemCount: anotherbuYlist.length,
+                         itemBuilder: (BuildContext ctx, int i) {
+                           return _buyAmount(mediaQuery, anotherbuYlist[i]);
+                         },
+                       )
+                          ),
+                          SizedBox(width: 5,),
+
+                    ],
+                  ): Center(
                     child: Padding(
                       padding:  EdgeInsets.only(top: size.height*0.3),
                       child: Text("No orders get placed yet..."),
@@ -374,12 +367,12 @@ class _openOrdersVolumeState extends State<openOrdersVolume> {
 
                 Text(
                   item.value.toString(),
-                  style: TextStyle(fontFamily: "IBM Plex Sans", fontSize: 12.0,color: day==false?Colors.white:Colors.black,),
+                  style: TextStyle(fontFamily: "IBM Plex Sans", fontSize: 12.0,color: day==false?Colors.green[600]:Colors.black,),
                 ),
                 Text(
                   widget.familyicon=="INR"? Cr.format(price).toString():item.price.toString(),
                   style: TextStyle(
-                      color: Colors.green[600],
+                      color: Colors.white,
                       fontWeight: FontWeight.w700,
                       fontFamily: "IBM Plex Sans",
                       fontSize: 12.0),
@@ -405,17 +398,18 @@ class _openOrdersVolumeState extends State<openOrdersVolume> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+
+                Text(
+                  item.value.toString(),
+                  style: TextStyle(fontFamily: "IBM Plex Sans", fontSize: 12.0,color: day==false?Colors.red : Colors.black),
+                ),
                 Text(
                   widget.familyicon=="INR"? Cr.format(price).toString():item.price.toString(),
                   style: TextStyle(
-                      color: Colors.red,
+                      color: Colors.white,
                       fontWeight: FontWeight.w700,
                       fontFamily: "IBM Plex Sans",
                       fontSize: 12.0),
-                ),
-                Text(
-                  item.value.toString(),
-                  style: TextStyle(fontFamily: "IBM Plex Sans", fontSize: 12.0,color: day==false?Colors.white:Colors.black),
                 ),
 
               ],),

@@ -13,6 +13,7 @@ import 'package:exchange/config/APIMainClass.dart';
 import 'package:exchange/config/SharedPreferenceClass.dart';
 import 'package:exchange/config/ToastClass.dart';
 import 'package:exchange/config/constantClass.dart';
+import 'package:exchange/library/intro_views_flutter-2.4.0/lib/Models/crypto_response.dart';
 import 'package:exchange/screen/crypto_detail_card_homeScreen/DetailCryptoValue/openOrdersVolume.dart';
 import 'package:exchange/screen/crypto_detail_card_homeScreen/DetailCryptoValue/orderHistory.dart';
 import 'package:exchange/screen/history/Open_Orders.dart';

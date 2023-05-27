@@ -1,48 +1,87 @@
-import 'dart:developer';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:exchange/config/APIClasses.dart';
+import 'package:exchange/config/APIMainClass.dart';
+import 'package:exchange/config/ToastClass.dart';
+import 'package:exchange/library/intro_views_flutter-2.4.0/lib/Models/buy_btc_response.dart';
 import 'package:flutter/material.dart';
 import '../../../config/constantClass.dart';
-import '../../intro/login.dart';
-import '../../wallet/wallet.dart';
+
 
 class buy extends StatefulWidget {
+  final String currencyneed;
+  final String pairCurrency;
+  final String price;
+  bool isFirstTime;
+
+   buy({Key key, this.currencyneed, this.pairCurrency, this.price, this.isFirstTime = true}) : super(key: key);
   @override
   State<buy> createState() => _buyState();
 }
 
 class _buyState extends State<buy> {
-  @override
-  String dropdownValue = 'Limit';
-  var data;
-  var data1;
-  double _counter = 0.345666;
-  double ADA = 0.56546;
+  List currency = [];
+  List btclist = [];
+  String price1;
+  bool isLoading = false;
+  bool button = false;
+  String dropdownValue = 'limit';
+  String btc;
+  var usdt = 0.00;
+  double total = 0;
+  TextEditingController controller = TextEditingController();
+  TextEditingController controllerBtc = TextEditingController();
+
   void _incrementCounter() {
     setState(() {
-      _counter++;
-      data = _counter.toStringAsExponential(1);
+      double currentValue = double.parse(controller.text != null ? controller.text : 0);
+      setState(() {
+        currentValue++;
+        controller.text = (currentValue)
+            .toString(); // incrementing value
+        usdt =  (currentValue + 0.001);
+      });
     });
   }
 
-  void _incrementADA() {
+  void _incrementBTCCounter() {
     setState(() {
-      ADA++;
-      data1 = ADA.toStringAsExponential(1);
+      double currentValue = double.parse(controllerBtc.text != null ? controllerBtc.text : 0);
+        currentValue++;
+        controllerBtc.text = (currentValue)
+            .toString(); // incrementing value
+      sum();
     });
   }
 
   void _decrementCounter() {
     setState(() {
-      _counter--;
-      data = _counter.toStringAsExponential(1);
+      double currentValue = double.parse(controller.text != null ? controller.text : 0);
+      currentValue--;
+      controller.text =
+          (currentValue > 0 ? currentValue : 0)
+              .toString();
+      usdt =   (currentValue > 0  ? currentValue + 0.001 : 0);
     });
   }
 
-  void _decrementADA() {
+  void _decrementBTCCounter() {
     setState(() {
-      ADA--;
-      data1 = ADA.toStringAsExponential(1);
+      double currentValue = double.parse(controllerBtc.text != null ? controllerBtc.text : 0);
+      currentValue--;
+      controllerBtc.text =
+          (currentValue > 0 ? currentValue : 0)
+              .toString();
+      sum();
     });
+  }
+
+  @override
+  void initState() {
+    getData();
+    controllerBtc.text = '0';
+    controller.text =  widget.isFirstTime ? price1 : double.parse(widget.price).toStringAsFixed(3);
+    super.initState();
   }
 
   Widget build(BuildContext context) {
@@ -62,15 +101,6 @@ class _buyState extends State<buy> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // IconButton(
-                  //   padding: EdgeInsets.only(bottom: 5),
-                  //   iconSize: 20,
-                  //   color: Colors.grey,
-                  //   onPressed: () {},
-                  //   icon: const Icon(
-                  //     Icons.circle,
-                  //   ),
-                  // ),
                   Padding(
                     padding:  EdgeInsets.only(left: 8.0),
                     child: Container(
@@ -80,7 +110,7 @@ class _buyState extends State<buy> {
                         // Step 3.
                         value: dropdownValue,
                         // Step 4.
-                        items: <String>['Limit', 'Market', 'Stop Limit', 'Stop Market', 'OCO', 'trailing Spot'
+                        items: <String>['limit', 'market',
                         ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -105,6 +135,7 @@ class _buyState extends State<buy> {
             SizedBox(
               height: 15,
             ),
+
             Container(
               height: 30,
               width: 180,
@@ -113,91 +144,81 @@ class _buyState extends State<buy> {
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    padding: EdgeInsets.only(bottom: 2),
-                    iconSize: 20,
-                    color: Colors.grey,
-                    onPressed: () {
-                      _decrementCounter();
-                    },
-                    icon: const Icon(
-                      Icons.remove,
-                    ),
+                  SizedBox(width: 5,),
+                  GestureDetector(
+                      onTap: () {
+                        _incrementCounter();
+                      },
+                      child: Icon(Icons.add,color: Colors.grey,size: 18,)),
+                  SizedBox(width: 10,
                   ),
                   Expanded(
-                    child: Container(
-                        alignment: Alignment.center,
-                        child: AutoSizeText("$_counter", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
+                    child: TextFormField(
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),fontSize: 14,fontWeight: FontWeight.bold,),
+                      controller: controller,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
-                  IconButton(
-                    padding: EdgeInsets.only(bottom: 2),
-                    iconSize: 20,
-                    color: Colors.grey,
-                    onPressed: () {
-                      _incrementCounter();
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                    ),
-                  ),
+                  GestureDetector(
+                      onTap: (){
+                        _decrementCounter();
+                      },
+                      child: Icon(Icons.remove,color: Colors.grey,size: 18,)),
+                  SizedBox(width: 5,)
                 ],
               ),
-            ),
-            SizedBox(
+            ),  SizedBox(
               height: 5,
             ),
             Container(
+              height: 15,
                 padding: EdgeInsets.only(right: 100),
-                child: Text("=$data USD", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
+                child: Text("= ${usdt} ", style: TextStyle(
+                  fontSize: 12,
+                  color: day == false ? Colors.white : Color(0xff0a0909),),)
             ),
             SizedBox(
               height: 10,
             ),
             Container(
-              height: 30,
-              width: 180,
-              decoration: BoxDecoration(
-                border: Border.all(color: Color(0xff313131),width: 2),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    padding: EdgeInsets.only(bottom: 2),
-                    iconSize: 20,
-                    color: Colors.grey,
-                    onPressed: () {
-                      _decrementADA();
-                    },
-                    icon: const Icon(
-                      Icons.remove,
+                height: 30,
+                width: 180,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xff313131),width: 2),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 5,),
+                    GestureDetector(
+                        onTap: () {
+                          _incrementBTCCounter();
+                        },
+                        child: Icon(Icons.add,color: Colors.grey,size: 18,)),
+                    SizedBox(width: 10,
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                        alignment: Alignment.center,
-                        child: AutoSizeText("$ADA", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
+                    Expanded(
+                      child: TextFormField(
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),fontSize: 14,fontWeight: FontWeight.bold,),
+                        controller: controllerBtc,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    padding: EdgeInsets.only(bottom: 2),
-                    iconSize: 20,
-                    color: Colors.grey,
-                    onPressed: () {
-                      _incrementADA();
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                    ),
-                  ),
-                ],
-              ),
+                    GestureDetector(
+                        onTap: (){
+                          _decrementBTCCounter();
+                        },
+                        child: Icon(Icons.remove,color: Colors.grey,size: 18,)),
+                    SizedBox(width: 5,)
+                  ],
+                ),
             ),
             SizedBox(
               height: 10,
@@ -259,19 +280,35 @@ class _buyState extends State<buy> {
               height: 15,
             ),
             Container(
-              alignment: Alignment.center,
               height: 30,
               width: 180,
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xff313131),width: 2),
                 borderRadius: BorderRadius.circular(5.0),
               ),
-              child: Text("$ADA", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909)),),
+              child: TextFormField(
+                style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),fontSize: 14,fontWeight: FontWeight.bold,),
+                readOnly: true,
+                controller: TextEditingController(text: total.toStringAsFixed(2)),
+                textAlign: TextAlign.center,
+                cursorWidth: 0,
+                cursorHeight: 0,
+                decoration: InputDecoration(
+                   hintStyle: TextStyle(fontSize: 12),
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    border: InputBorder.none,
+
+                ),
+              ),
             ),
             SizedBox(height: 5),
             Container(
+              height: 1,
                 padding: EdgeInsets.only(right: 100),
-                child: Text("= $data1 USD", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
+                child: Text("=USD", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
             ),
             SizedBox(
               height: 10,
@@ -280,21 +317,23 @@ class _buyState extends State<buy> {
                 padding: EdgeInsets.only(right: 140),
                 child: Text("Avail.", style: TextStyle(color: day == false ? Colors.white : Color(0xff0a0909),),)
             ),
-            SizedBox(height: 60,),
+            SizedBox(height: 10,),
             GestureDetector(
               onTap: () {
-                // Navigator.push(context, MaterialPageRoute(builder: (context)=>login()));
+                setState(() {
+                  button ?  null : buyBtc();
+                });
               },
               child: Container(
-                height: 50.0,
+                height: 40.0,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Colors.green,
+                    color:  Colors.green,
                     borderRadius: BorderRadius.circular(10.0)
                   //boxShadow: Colors.white12,
                 ),
                 child: Center(
-                  child: Text("buy BTC", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontFamily: "IBM Plex Sans", fontSize: 16.0,),),
+                  child:  Text("Buy BTC", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontFamily: "IBM Plex Sans", fontSize: 16.0,),),
                 ),
               ),
             )
@@ -303,4 +342,73 @@ class _buyState extends State<buy> {
       ),
     );
   }
+  getData() async {
+    final Map<String, String> paramDic = {
+      "": "",
+    };
+    try {
+      final response = await APIMainClassbinance(APIClasses.currencyget, paramDic, "Get");
+      if (response?.statusCode == 200) {
+        print(response.body);
+        var data = json.decode(response.body);
+        setState(() {
+         currency.add(data['data']['USDT'][0]['price']);
+         String k = currency[0].toString();
+         price1 = widget.isFirstTime ? k : widget.price;
+         controller.text = double.parse(price1).toStringAsFixed(2);
+         usdt = double.parse(price1) + 0.001;
+        });
+      } else {
+        throw Exception('Unable to fetch data ');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch data: $e');
+    }
+  }
+
+  buyBtc() async {
+    setState(() {
+      button= true;
+    });
+    try {
+      final request = await APIMainClassbinance(
+          APIClasses.buy,
+          <String, String>{
+            "order_type": "buy",
+            "type": dropdownValue,
+            "currency": widget.currencyneed,
+            "with_currency": widget.pairCurrency,
+            "stop_price": 0.toString(),
+            "at_price": controller.text,
+            "quantity": controllerBtc.text,
+            "total": total.toString(),
+          },
+          "Post");
+      if (request?.statusCode == 200) {
+        String message = request.body;
+        setState(() {
+          PlaceOrderResponse res = placeOrderResponseFromJson(message);
+        ToastClass.ToastShow(res.message,color: Colors.white);
+        Future.delayed(Duration(seconds: 3), () {
+          setState(() {
+            button = false;
+          });
+        });
+        });
+      } else {
+        button = false;
+        throw Exception('Unable to fetch data ');
+      }
+    } catch (e) {
+      button = false;
+      throw Exception('Failed to fetch data: $e');
+    }
+  }
+ double sum() {
+    setState(() {
+      total = double.parse(controller.text) * double.parse(controllerBtc.text);
+      return total.toStringAsFixed(2);
+    });
+  }
 }
+

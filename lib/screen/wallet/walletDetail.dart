@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, camel_case_types, unused_local_variable
 
+import 'package:exchange/library/intro_views_flutter-2.4.0/lib/Models/wallet_response.dart';
 import 'package:exchange/screen/wallet/tabs/deposit.dart';
 import 'package:exchange/screen/wallet/tabs/withdraw.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import '../../config/constantClass.dart';
 class walletDetail extends StatefulWidget {
   String currency;
   String currencySymbol;
-  List network;
+  List  network;
   String qty;
   int index;
 
@@ -34,7 +35,7 @@ class _walletDetailState extends State<walletDetail>
     print("WHY NOTR ");
     print(widget.network.toString());
     _tabController =
-        new TabController(length: 2, vsync: this, initialIndex: widget.index);
+        new TabController(length: 2, vsync: this, initialIndex: 1);
 
     super.initState();
   }

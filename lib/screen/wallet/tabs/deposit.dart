@@ -67,10 +67,6 @@ class _depositState extends State<deposit> {
             Expanded(
               child: Container(
                 width: double.infinity,
-                // decoration: BoxDecoration(
-                //    color: day==false?Colors.transparent:Color(0xff143047),
-                //     borderRadius: BorderRadius.all(Radius.circular(10.0))),
-
                 child: TabBarView(
                   controller: _tabController,
                   children: <Widget>[

@@ -21,13 +21,13 @@ class ToastShowClass {
 
 class ToastClass {
 
-  static void ToastShow(String ToastValue) {
+  static void ToastShow(String ToastValue ,{Color color}) {
     Fluttertoast.showToast(
         msg: ToastValue,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
        // backgroundColor: _color,
-        textColor:  Color(0xFF1f3c75),
+        textColor:  color ?? Color(0xFF1f3c75),
         fontSize: 16.0);
   }
 }

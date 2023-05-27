@@ -1,16 +1,19 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:ui';
+
 class APIClasses {
   static String currencyget = "/list-crypto/get";
   static String LBM_BaseURL = 'tradehit.io'; //
   static String Local_NodeUrl = 'http://192.168.29.8:'; //
   static String NODELBM_BaseURL = 'api.tradehit.io'; //
   static String websocket_url = 'wss://node.tradehit.io/';
+  static String biananceSocketUrl = 'wss://stream.binance.com:9443/ws/bnbusdt@depth20@1000ms"';
 
   ///REGISTERATION
   static String LBM_register = '/backend/public/api/register'; //
   static String LBM_emailotp = '/backend/public/api/validateotp';
-  static String LBM_phoneotp = '/backend/public/api/validateotp/mobile/'; //later
+  static String LBM_phoneotp = '/backend/public/api/validateotp/mobile'; //later
   static String LBM_resendotp = '/backend/public/api/resendotp'; //
   static String LMB_qr        =  '/verify-qr-code';
 
@@ -78,4 +81,7 @@ class APIClasses {
   /// Launchpad
   static String launchpad = '/launchpad/token_get';
   static String launchpadOrderPlace = '/launchpad/order_place';
+}
+class AppColor {
+  static const green = Color(0xff38caa6);
 }

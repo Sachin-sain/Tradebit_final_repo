@@ -76,8 +76,8 @@ class _myAppState extends State<myApp> {
       routes: <String, WidgetBuilder>{
         "onBoarding": (BuildContext context) => firstTime == "true"
             ? onBoarding()
-            :bottomNavBar(
-index: 0,
+            : bottomNavBar(
+                index: 0,
               ),
       },
     );

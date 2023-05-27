@@ -16,10 +16,12 @@ import 'package:wakelock/wakelock.dart';
 
 
 class HotDeals extends StatefulWidget {
+  int selectedPage;
+
   final Widget child;
   Map<String, dynamic> currency_data;
 
-  HotDeals({Key key, this.child, this.currency_data}) : super(key: key);
+  HotDeals({Key key, this.child, this.currency_data, this.selectedPage}) : super(key: key);
 
   _HotDealsState createState() => _HotDealsState();
 }

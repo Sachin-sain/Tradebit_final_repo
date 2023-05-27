@@ -133,7 +133,6 @@ class login_confirm extends StatelessWidget {
 Future<Void> qr_code(qrtoken) async {
   final paramDic = {
     'token': qrtoken.toString()
-
   };
   print(qrtoken);
   print(paramDic.toString());
