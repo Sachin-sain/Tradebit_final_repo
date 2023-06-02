@@ -11,6 +11,8 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:wakelock/wakelock.dart';
 
+import '../history/Trade/Trade.dart';
+
 
 class gainer extends StatefulWidget {
   final Widget child;
@@ -458,117 +460,120 @@ class _gainerState extends State<gainer> with TickerProviderStateMixin {
           child: Column(
             children: <Widget>[
               InkWell(
-                onTap: () {
-                  setState(() {
-                    listed=Currency_data['$CurrencyName']
-                    [Currency_data['$CurrencyName'].keys.elementAt(i)][6]
-                    ['listed']
-                        .toString();
-                    selectedPair=Currency_data['$CurrencyName']
-                        .keys
-                        .elementAt(i)
-                        .toString()
-                        .split('$CurrencyName')[0]
-                        .toString()+"USDT";
-                  });
-                  open_order(
-                      Currency_data['$CurrencyName']
-                      [Currency_data['$CurrencyName'].keys.elementAt(i)]
-                      [6]['listed']
-                          .toString(),
-                      Currency_data['$CurrencyName']
-                          .keys
-                          .elementAt(i)
-                          .toString()
-                          .split('$CurrencyName')[0]
-                          .toString()
-                          .toUpperCase(),
-                      "USDT");
-                  OrdersHistory(
-                      Currency_data['$CurrencyName']
-                      [Currency_data['$CurrencyName'].keys.elementAt(i)]
-                      [6]['listed']
-                          .toString(),
-                      Currency_data['$CurrencyName']
-                          .keys
-                          .elementAt(i)
-                          .toString()
-                          .split('$CurrencyName')[0]
-                          .toString()
-                          .toUpperCase(),
-                      "USDT");
-
-                  Navigator.of(ctx).push(PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => new btcDetail(
-                           currency_data: {
-                          "currency_name": Currency_data['$CurrencyName']
-                              .keys
-                              .elementAt(i)
-                              .toString()
-                              .split('$CurrencyName')[0]
-                              .toString(),
-                          "PRICE": num.parse(Currency_data['$CurrencyName'][
-                                      Currency_data['$CurrencyName']
-                                          .keys
-                                          .elementAt(i)][3]['currentprice']
-                                  .toString())
-                              .toString(),
-                          "HIGHDAY": Currency_data['$CurrencyName'][
-                                  Currency_data['$CurrencyName']
-                                      .keys
-                                      .elementAt(i)][10]['high']
-                              .toString(),
-                          "LOWDAY": Currency_data['$CurrencyName'][
-                                  Currency_data['$CurrencyName']
-                                      .keys
-                                      .elementAt(i)][9]['low']
-                              .toString(),
-                          "24chg": Currency_data['$CurrencyName'][
-                                  Currency_data['$CurrencyName']
-                                      .keys
-                                      .elementAt(i)][5]['24chg']
-                              .toString(),
-                          "listed": Currency_data['$CurrencyName'][
-                                  Currency_data['$CurrencyName']
-                                      .keys
-                                      .elementAt(i)][6]['listed']
-                              .toString(),
-                          "decimal_currency": Currency_data['$CurrencyName'][
-                                  Currency_data['$CurrencyName']
-                                      .keys
-                                      .elementAt(i)][7]['decimal_currency']
-                              .toString(),
-                          "decimal_pair": Currency_data['$CurrencyName'][
-                                  Currency_data['$CurrencyName']
-                                      .keys
-                                      .elementAt(i)][8]['decimal_pair']
-                              .toString(),
-                          "vol": "0.0"
-                        },
-                        pair: Currency_data['$CurrencyName']
-                            .keys
-                            .elementAt(i)
-                            .toString()
-                            .split('$CurrencyName')[0]
-                            .toString(),
-                        familycoin: "USDT",
-                      )));
-                  // Navigator.of(ctx).push(PageRouteBuilder(
-                  //     pageBuilder: (_, __, ___) => new btcDetail(
-                  //       currency_data: Currency_data['$CurrencyName'][
-                  //       Currency_data['$CurrencyName']
-                  //           .keys
-                  //           .elementAt(i)][0]
-                  //       ,
-                  //       pair: Currency_data['$CurrencyName']
-                  //           .keys
-                  //           .elementAt(i)
-                  //           .toString()
-                  //           .split('$CurrencyName')[0]
-                  //           .toString(),
-                  //       familycoin: "USDT",
-                  //     )));
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx)=>Trade()));
                 },
+                // onTap: () {
+                //   setState(() {
+                //     listed=Currency_data['$CurrencyName']
+                //     [Currency_data['$CurrencyName'].keys.elementAt(i)][6]
+                //     ['listed']
+                //         .toString();
+                //     selectedPair=Currency_data['$CurrencyName']
+                //         .keys
+                //         .elementAt(i)
+                //         .toString()
+                //         .split('$CurrencyName')[0]
+                //         .toString()+"USDT";
+                //   });
+                //   open_order(
+                //       Currency_data['$CurrencyName']
+                //       [Currency_data['$CurrencyName'].keys.elementAt(i)]
+                //       [6]['listed']
+                //           .toString(),
+                //       Currency_data['$CurrencyName']
+                //           .keys
+                //           .elementAt(i)
+                //           .toString()
+                //           .split('$CurrencyName')[0]
+                //           .toString()
+                //           .toUpperCase(),
+                //       "USDT");
+                //   OrdersHistory(
+                //       Currency_data['$CurrencyName']
+                //       [Currency_data['$CurrencyName'].keys.elementAt(i)]
+                //       [6]['listed']
+                //           .toString(),
+                //       Currency_data['$CurrencyName']
+                //           .keys
+                //           .elementAt(i)
+                //           .toString()
+                //           .split('$CurrencyName')[0]
+                //           .toString()
+                //           .toUpperCase(),
+                //       "USDT");
+                //
+                //   Navigator.of(ctx).push(PageRouteBuilder(
+                //       pageBuilder: (_, __, ___) => new btcDetail(
+                //            currency_data: {
+                //           "currency_name": Currency_data['$CurrencyName']
+                //               .keys
+                //               .elementAt(i)
+                //               .toString()
+                //               .split('$CurrencyName')[0]
+                //               .toString(),
+                //           "PRICE": num.parse(Currency_data['$CurrencyName'][
+                //                       Currency_data['$CurrencyName']
+                //                           .keys
+                //                           .elementAt(i)][3]['currentprice']
+                //                   .toString())
+                //               .toString(),
+                //           "HIGHDAY": Currency_data['$CurrencyName'][
+                //                   Currency_data['$CurrencyName']
+                //                       .keys
+                //                       .elementAt(i)][10]['high']
+                //               .toString(),
+                //           "LOWDAY": Currency_data['$CurrencyName'][
+                //                   Currency_data['$CurrencyName']
+                //                       .keys
+                //                       .elementAt(i)][9]['low']
+                //               .toString(),
+                //           "24chg": Currency_data['$CurrencyName'][
+                //                   Currency_data['$CurrencyName']
+                //                       .keys
+                //                       .elementAt(i)][5]['24chg']
+                //               .toString(),
+                //           "listed": Currency_data['$CurrencyName'][
+                //                   Currency_data['$CurrencyName']
+                //                       .keys
+                //                       .elementAt(i)][6]['listed']
+                //               .toString(),
+                //           "decimal_currency": Currency_data['$CurrencyName'][
+                //                   Currency_data['$CurrencyName']
+                //                       .keys
+                //                       .elementAt(i)][7]['decimal_currency']
+                //               .toString(),
+                //           "decimal_pair": Currency_data['$CurrencyName'][
+                //                   Currency_data['$CurrencyName']
+                //                       .keys
+                //                       .elementAt(i)][8]['decimal_pair']
+                //               .toString(),
+                //           "vol": "0.0"
+                //         },
+                //         pair: Currency_data['$CurrencyName']
+                //             .keys
+                //             .elementAt(i)
+                //             .toString()
+                //             .split('$CurrencyName')[0]
+                //             .toString(),
+                //         familycoin: "USDT",
+                //       )));
+                //   // Navigator.of(ctx).push(PageRouteBuilder(
+                //   //     pageBuilder: (_, __, ___) => new btcDetail(
+                //   //       currency_data: Currency_data['$CurrencyName'][
+                //   //       Currency_data['$CurrencyName']
+                //   //           .keys
+                //   //           .elementAt(i)][0]
+                //   //       ,
+                //   //       pair: Currency_data['$CurrencyName']
+                //   //           .keys
+                //   //           .elementAt(i)
+                //   //           .toString()
+                //   //           .split('$CurrencyName')[0]
+                //   //           .toString(),
+                //   //       familycoin: "USDT",
+                //   //     )));
+                // },
                 child:IntrinsicHeight(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

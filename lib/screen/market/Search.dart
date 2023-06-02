@@ -106,19 +106,16 @@ class _SearchState extends State<Search> {
             child: Card(
               color: day==false?Colors.white12:Colors.white,
               child: TextField(style: TextStyle(
-
-                color: day==false?Colors.white:Colors.black,
+                color: day==false?Colors.white : Colors.black,
               ),
                 onChanged: onSearchTextChanged,
                 decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.grey,
+                    fillColor: day==false?Colors.grey[900] : Colors.white60,
                     hintText: 'Search Coin...',
                     hintStyle: TextStyle(
                       color: day==false?Colors.white60:Colors.black54,
                     ),
-
-
                     suffixIcon: Icon(
                       Icons.search,
                       color: day==false?Colors.white:Colors.black,

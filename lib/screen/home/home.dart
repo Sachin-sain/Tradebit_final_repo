@@ -1,5 +1,6 @@
 
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get_ip_address/get_ip_address.dart';
 import 'package:exchange/screen/setting/Notificationpage.dart';
@@ -33,6 +34,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import '../../config/ToastClass.dart';
 import '../../config/constantClass.dart';
 import '../../config/constantClass.dart';
 import '../intro/Confirm_login.dart';
@@ -49,31 +51,22 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
-
-  String _scanBarcode = '';
+  final Connectivity _connectivity = Connectivity();
   int Selctedindex=0;
+ bool internet;
 
   @override
-  //QR Code
-  Future<void> scanQR() async {
-    String barcodeScanRes;
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
-
-      print("$barcodeScanRes");
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    }
-    setState(() {
-      var qrurl = barcodeScanRes;
-      var token = qrurl.split('?qrcode=');
-      _scanBarcode = token[1];
-
-    });
-  }
 
   AppUpdateInfo _updateInfo;
+  Future<void> checkInternetConnectivity() async {
+    final result = await _connectivity.checkConnectivity();
+    if (result == ConnectivityResult.none) {
+     internet=true;
+    } else if (result == ConnectivityResult.mobile || result == ConnectivityResult.wifi) {
+      internet=false;
+
+    }
+  }
   Future<void> checkForUpdates() async {
     try {
       await InAppUpdate.checkForUpdate().then((info) {
@@ -156,15 +149,17 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   static NumberFormat Cr = new NumberFormat("#,##0.00", "en_US");
   TabController _tabController;
   List<listType> SliderImage = [
-    listType(image: 'assets/image/banner/banner1.png',),
-    listType(image: 'assets/image/banner/banner2.png'),
-    listType(image: 'assets/image/banner/banner3.jpg'),
-    listType(image: 'assets/image/banner/banner4.png')
+    // listType(image: 'assets/image/banner/banner1.png',),
+    // listType(image: 'assets/image/banner/banner2.png'),
+    // listType(image: 'assets/image/banner/banner3.jpg'),
+    // listType(image: 'assets/image/banner/banner4.png')
+
   ];
   List<listType> SliderImages = [];
   var item;
   @override
   void initState() {
+    checkInternetConnectivity();
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       checkForUpdates();
@@ -225,7 +220,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
       });
       print("SLID " + SliderImages.length.toString());
     } else {
-      //ToastClass.ToastShow(data["message"]);
+      ToastClass.ToastShow(data["message"]);
     }
   }
 
@@ -268,112 +263,83 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                left: 20, top: screenSize.height * 0.05, right: 10),
+                left: 10, top: screenSize.height * 0.05, right: 10),
             child: Row(
               children: [
                 InkWell(
                   onTap: () {
                     Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => new setting()));
+                        pageBuilder: (_, __, ___) =>  status == "true" ?setting():login()));
                   },
                   child: CircleAvatar(
-                      backgroundColor: day == false ? Color(0xff919191) : Colors.white,
+                      backgroundColor: day == false ? Colors.grey[800] : Colors.white,
                       child: Icon(Icons.person,
                         color: day == false ? Colors.white : Color(0xff919191),
                       )),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                ),
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: Container(
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                    height: 30,
-                    width: 200,
-                    child: TextFormField(
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: day == false ? Colors.white : Color(0xff919191),
-                      ),
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        firsttimesearch = 0;
-                        Navigator.of(context).push(PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => new Search()));
-                      },
-                      cursorHeight: 0,
-                      cursorWidth: 0,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          filled: true,
-                          fillColor: Colors.grey,
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color:
-                                day == false ? Colors.white : Color(0xff919191),
-                          ),
-                          contentPadding: EdgeInsets.only(top: 10),
-                          hintText: "Search Coin..."),
+              SizedBox(width: 10,),
+                Container(
+                  padding: EdgeInsets.only(top: 5),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  height: 55,
+                  width: 250,
+                  child: TextFormField(
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: day == false ? Colors.white : Color(0xff919191),
                     ),
+                    onTap: () {
+                      FocusScope.of(context).unfocus();
+                      firsttimesearch = 0;
+                      Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => new Search()));
+                    },
+                    cursorHeight: 0,
+                    cursorWidth: 0,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[900],
+                        border: InputBorder.none,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Icon(
+                            Icons.search,
+                            color: day == false ? Colors.white : Color(0xff919191),
+                          ),
+                        ),
+                        contentPadding: EdgeInsets.only(top:0, ),
+                        hintText: "Search Coin..."),
                   ),
                 ),
+                SizedBox(width: 10,),
                 InkWell(
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Support()));
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Icon(
-                        Icons.support_agent_outlined,
-                        color: day == false ? Colors.white : Color(0xff919191),
-                      ),
+                    child: Icon(
+                      Icons.support_agent_outlined,
+                      color: day == false ? Colors.white : Color(0xff919191),
                     )),
-                InkWell(
-                    onTap: () async {
-                      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-                      scanQR();
-                      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-                      var ipAddress = IpAddress(type: RequestType.json);
-
-                      /// Get the IpAddress based on requestType.
-                      dynamic data = await ipAddress.getIpAddress();
-                      print('Device Information ${androidInfo}');
-                      print('Ip address ${data.toString()}');
-                      // Navigator.of(context).push(PageRouteBuilder(
-                      //     pageBuilder: (_, __, ___) => login_confirm(Token: _scanBarcode)));
-
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Icon(
-                        Icons.qr_code,
-                        color: day == false ? Colors.white : Color(0xff919191),
-                      ),
-                    )),
+                SizedBox(width: 10,),
                 Stack(alignment: Alignment.topCenter, children: [
                   InkWell(
                       onTap: () {
                         Navigator.of(context).push(PageRouteBuilder(
                             pageBuilder: (_, __, ___) => Notificationpage()));
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 0),
-                        child: Icon(
-                          Icons.notifications_active,
-                          color: day == false ? Colors.white : Color(0xff919191),
-                        ),
+                      child: Icon(
+                        Icons.notifications_active,
+                        color: day == false ? Colors.white : Color(0xff919191),
                       )),
                   Visibility(
                     visible: notification_count == 0 ? false : true,
@@ -403,6 +369,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                 : Container(
                     height: 100,
                     color: Colors.transparent,
+              child: Loader(),
                   ),
           ),
 
@@ -486,69 +453,6 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                     SizedBox(
                       height: 5,
                     ),
-                    Container(
-                      height: 70,
-                      child: Center(
-                        child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.only(
-                              left: 0, right: 145, top: 5),
-                          itemCount: menu1.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                              onTap: () {
-                                if (menu1[index].name1 == "Staking") {
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) =>
-                                          status == "true"
-                                              ? new StakingScreen()
-                                              : login()));
-                                } else if (menu1[index].name1 == "Blogs") {
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) =>
-                                          new BlogsScreen()));
-                                } else if (menu1[index].name1 ==
-                                    "Transaction") {
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) =>
-                                          new Comingsoon()));
-                                } else if (menu1[index].name1 == "P2P") {
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                      pageBuilder: (_, __, ___) =>
-                                          new Comingsoon()));
-                                }
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 25, right: 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    menu1[index].image1,
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 3),
-                                      child: Text(
-                                        menu1[index].name1,
-                                        style: TextStyle(
-                                            fontFamily: "IBM Plex Sans",
-                                            color: day == false
-                                                ? Colors.white
-                                                : Color(0xffa6a6a6),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -560,7 +464,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
             child: StreamBuilder(
                 stream: channel_home.stream,
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting &&
+                  if (internet == true &&
                       firsttimehome == 0) {
                     return _loadingCardAnimation(context);
                   } else if (snapshot.connectionState ==
@@ -829,13 +733,13 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
                         child: new TabBarView(
                           controller: _tabController,
                           children: [
-                            Connection == "nointernet"
+                          internet==true
                                 ? interneterror()
                                 : HotDeals(),
-                            Connection == "nointernet"
+                            internet==true
                                 ? interneterror()
                                 : gainer(),
-                            Connection == "nointernet"
+                            internet==true
                                 ? interneterror()
                                 : loser(),
                           ],
@@ -1062,3 +966,17 @@ class cardLoadingfirst extends StatelessWidget {
     );
   }
 }
+
+
+class Loader extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CircularProgressIndicator(
+        color: Colors.yellowAccent,
+      ),
+    );
+  }
+}
+

@@ -19,8 +19,7 @@ void main() async {
         channelGroupKey: 'reminders',
         channelKey: 'instant_notification',
         channelName: 'Basic Instant Notification',
-        channelDescription:
-            'Notification channel that can trigger notification instantly.',
+        channelDescription: 'Notification channel that can trigger notification instantly.',
         defaultColor: const Color(0xFF9D50DD),
         ledColor: Colors.white,
         playSound: true,
@@ -68,14 +67,11 @@ class _myAppState extends State<myApp> {
                   BottomSheetThemeData(backgroundColor: Colors.transparent),
             ),
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: SplashScreen (),
 
-      /// Move splash screen to onBoarding Layout
-      /// Routes
-      ///
       routes: <String, WidgetBuilder>{
         "onBoarding": (BuildContext context) => firstTime == "true"
-            ? onBoarding()
+            ?  onBoarding()
             : bottomNavBar(
                 index: 0,
               ),
@@ -83,8 +79,8 @@ class _myAppState extends State<myApp> {
     );
   }
 }
-
 /// Component UI
+
 class SplashScreen extends StatefulWidget {
   SplashScreen();
   @override
@@ -101,14 +97,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   /// To navigate layout change
-  void NavigatorPage() {
-    firstTime == "false"
+  void  NavigatorPage() {
+    firstTime == "true"
         ? Navigator.of(context).pushReplacementNamed("onBoarding")
         : Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) =>bottomNavBar(
-index: 0,
+              index: 0,
               ),
+
             ),
           );
   }
@@ -128,10 +125,11 @@ index: 0,
     return Scaffold(
       backgroundColor: day == false ?  Color(0xff070d10) : Colors.white,
       body: Container(
-
-        height: MediaQuery.of(context).size.height,
         child: Image.asset("assets/ilustration/splash.png",
-            height: MediaQuery.of(context).size.height),
+            fit: BoxFit.fill,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+        ),
       ),
     );
   }

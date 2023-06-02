@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class PageViewModel {
   /// Page BackGround Color
   final Color pageColor;
-
   ///icon image path
   final String iconImageAssetPath;
 
@@ -23,7 +22,6 @@ class PageViewModel {
   ///
   /// @Default Textstyle `color: Colors.white , fontSize: 50.0`
   final Widget title;
-
   /// widget for the body
   ///
   /// _typicaly a Text Widget_
@@ -46,6 +44,8 @@ class PageViewModel {
   /// gets overriden by [iconImageAssetPath]
   final Widget bubble;
 
+
+
   PageViewModel(
       {this.pageColor,
       this.iconImageAssetPath,
@@ -65,3 +65,5 @@ class PageViewModel {
     return TextStyle(color: Colors.white, fontSize: 24.0).merge(this.textStyle);
   }
 }
+
+

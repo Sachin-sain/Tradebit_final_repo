@@ -137,7 +137,7 @@ Widget callPage(int current,
       return new home();
       break;
     case 1:
-      return status == "true" ? new market() : login();
+      return  new market() ;
       break;
     case 2:
       return status == "true" ?Trade(

@@ -168,23 +168,8 @@ List<MenuItem> menu = [
     ),
   ),
   MenuItem(
-    name: "Airdrop",
+    name: "Staking",
     image: Image.asset(
-      "assets/image/airdrop.png",
-      height: 30.0,
-      fit: BoxFit.contain,
-
-      width: 30.0,
-    ),
-  ),
-
-];
-
-List<MenuItem1> menu1 = [
-
-  MenuItem1(
-    name1: "Staking",
-    image1: Image.asset(
       "assets/image/staking.png",
       height: 30.0,
       fit: BoxFit.contain,
@@ -192,34 +177,9 @@ List<MenuItem1> menu1 = [
       width: 30.0,
     ),
   ),
-  MenuItem1(
-    name1: "Blogs",
-    image1: Image.asset(
-      "assets/image/blog.png",
-      height: 30.0,
-      fit: BoxFit.contain,
+];
 
-      width: 30.0,
-    ),
-  ),
-  MenuItem1(
-    name1: "Transaction",
-    image1: Image.asset(
-      "assets/image/transaction.png",
-      height: 30.0,
-      fit: BoxFit.contain,
+List<MenuItem1> menu1 = [
 
-      width: 30.0,
-    ),
-  ),
-  MenuItem1(
-    name1: "P2P",
-    image1: Image.asset(
-      "assets/image/P2P.png",
-      height: 30.0,
-      fit: BoxFit.contain,
 
-      width: 30.0,
-    ),
-  ),
 ];

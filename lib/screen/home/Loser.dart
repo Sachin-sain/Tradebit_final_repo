@@ -17,6 +17,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../history/Trade/Trade.dart';
+
 class loser extends StatefulWidget {
   final Widget child;
   Map<String, dynamic> currency_data;
@@ -183,9 +185,7 @@ class _loserState extends State<loser> with TickerProviderStateMixin {
       Currency_data['$CurrencyName'][Currency_data['$CurrencyName'].keys.elementAt(i)][4]['lastprice'] =item['c'];
       Currency_data['$CurrencyName'][Currency_data['$CurrencyName'].keys.elementAt(i)][5]['24chg'] = item['P'];
 
-
     }
-
 
     return double.parse(Currency_data['$CurrencyName'][Currency_data['$CurrencyName'].keys.elementAt(i)][5]['24chg']
         .toString())<0.0?Padding(
@@ -195,9 +195,10 @@ class _loserState extends State<loser> with TickerProviderStateMixin {
               children: <Widget>[
                 InkWell(
                   onTap: () {
-                    setState(() {
-                      listed=Currency_data['$CurrencyName'][Currency_data['$CurrencyName'].keys.elementAt(i)][6]['listed'].toString();
-                      selectedPair=Currency_data['$CurrencyName'].keys.elementAt(i).toString().split('$CurrencyName')[0].toString()+"USDT";});
+                    Navigator.push(context, MaterialPageRoute(builder: (ctx)=>Trade()));
+                    // setState(() {
+                    //   listed=Currency_data['$CurrencyName'][Currency_data['$CurrencyName'].keys.elementAt(i)][6]['listed'].toString();
+                    //   selectedPair=Currency_data['$CurrencyName'].keys.elementAt(i).toString().split('$CurrencyName')[0].toString()+"USDT";});
                     open_order(
                         Currency_data['$CurrencyName']
                         [Currency_data['$CurrencyName'].keys.elementAt(i)]

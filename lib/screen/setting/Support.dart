@@ -25,7 +25,7 @@ class _SupportState extends State<Support> {
         backgroundColor: day == false ? Colors.black : Colors.white,
         appBar: AppBar(
           backgroundColor: day == false ? Colors.black : Colors.white,
-          title: Text("Contact Support",
+          title: Text("Ticket Support",
               style: TextStyle(
                 fontFamily: "IBM Plex Sans",
                 color: day == false ? Colors.white : Colors.black,
@@ -34,7 +34,7 @@ class _SupportState extends State<Support> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            height: 250,
+            height: 200,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               border: Border.all(
@@ -46,29 +46,32 @@ class _SupportState extends State<Support> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("You control your data, and we respect that.",
-                      style: TextStyle(
-                          color: day == false ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'IBM Plex Sans')),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text("You control your data, and we respect that.",
+                        style: TextStyle(
+                            color: day == false ? Colors.white : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'IBM Plex Sans'),
+                    textAlign: TextAlign.center,),
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    '''For requests regarding:
-1. Copy of your data
-2. Data export
-3. Data correction
-Please reach out to us. Our team will be happy to help you out.
-                ''',
-                    style: TextStyle(
-                        color: day == false ? Colors.white : Colors.black,
-                        fontFamily: 'Poplins'),
+                  Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: Text(' Please reach out to us. Our team will be happy to help you out.',
+                      style: TextStyle(
+                          color: day == false ? Colors.white : Colors.black,
+                          fontFamily: 'Poplins'),
+                    ),
                   ),
+                  SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
+                        padding: EdgeInsets.all(8),
                         alignment: Alignment.center,
                         height: 35,
                         decoration: BoxDecoration(
@@ -84,7 +87,7 @@ Please reach out to us. Our team will be happy to help you out.
                           },
                           // color: Color(0xff17394f),
                           child: Text(
-                            "Contact Us",
+                            "Create Ticket",
                             style: TextStyle(
                                 fontFamily: 'IBM Plex Sans',
                                 color: Colors.white),
@@ -92,6 +95,7 @@ Please reach out to us. Our team will be happy to help you out.
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.all(8),
                         alignment: Alignment.center,
                         height: 35,
                         decoration: BoxDecoration(

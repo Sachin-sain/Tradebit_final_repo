@@ -4,10 +4,10 @@ import 'dart:ui';
 
 class APIClasses {
   static String currencyget = "/list-crypto/get";
-  static String LBM_BaseURL = 'tradehit.io'; //
+  static String LBM_BaseURL = 'tradebit.io'; //
   static String Local_NodeUrl = 'http://192.168.29.8:'; //
-  static String NODELBM_BaseURL = 'api.tradehit.io'; //
-  static String websocket_url = 'wss://node.tradehit.io/';
+  static String NODELBM_BaseURL = 'api.tradebit.io'; //
+  static String websocket_url = 'wss://api.tradebit.io/';
   static String biananceSocketUrl = 'wss://stream.binance.com:9443/ws/bnbusdt@depth20@1000ms"';
 
   ///REGISTERATION
